@@ -2,7 +2,7 @@ name: Build and Push Docker Image
 
 on:
   push:
-    branches: [ "dev" ]  # Tracks your dev branch
+    branches: [ "dev" ]
 
 env:
   REGISTRY: ghcr.io
@@ -36,9 +36,9 @@ jobs:
             type=sha,format=short
 
       - name: Build and push Docker image
-        uses: docker/build-action@v6
+        uses: docker/build-push-action@v6
         with:
           context: .
           push: true
-          tags: ${{ id.meta.outputs.tags }}
-          labels: ${{ id.meta.outputs.labels }}
+          tags: ${{ steps.meta.outputs.tags }}    # <-- Fixed here
+          labels: ${{ steps.meta.outputs.labels }}  # <-- Fixed here
